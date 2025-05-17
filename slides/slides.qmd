@@ -466,6 +466,24 @@ the_rent_is_too_damn_high %>%
 
 ```{r}
 ##| fig-cap: Height distribution of US women 20+, [CDC](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf)
+feetinches = function (x) {
+    paste0(x %/% 12, "' ", x %% 12, '"')
+}
+
+female_height = function () {
+    x = seq(42, 84, 0.1)
+    # converting std err back to std dev
+    Female = dnorm(x, mean=63.5, sd=2.74)
+    tibble(x=x, Female=Female) %>%
+        ggplot(aes(x=x, y=Female)) +
+            geom_line() +
+            scale_x_continuous(labels=feetinches, expand=c(0,0)) +
+            xlab("Height") +
+            ylab("Probability") +
+            theme(axis.text=element_text(size=24), axis.title=element_text(size=24)) %>%
+            return()
+}
+
 female_height()
 ```
 
