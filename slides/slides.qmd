@@ -134,7 +134,8 @@ sensors = read_excel(here::here("data/roadway_sensors.xlsx"))
 
 ```{r}
 head(ipums) |> gt() |>
-    fmt_number(columns=incwage_cpiu_2022, decimals=0)
+    fmt_number(columns=incwage_cpiu_2022, decimals=0) +
+    tab_options(table.font.size=36)
 ```
 
 ## Our data: columns
@@ -151,12 +152,6 @@ head(ipums) |> gt() |>
 - At its heart, statistics is a tool to summarize _data_ into actionable _information_
 - Statistics can describe the current situation, forecast future outcomes, and understand relationships between variables
 - Algebra and calculus are math with too few numbers, statistics is math with too many
-
-## Descriptive vs. inferential statistics
-
-- Descriptive statistics describe patterns in data
-- Inferential statistics are focused on statistical "tests" to determine if data are consistent with hypotheses
-- Descriptive statistics are the most common in planning
 
 ## Statistical data
 
@@ -177,8 +172,8 @@ head(ipums) |> gt() |>
 
 ## The mean
 
-- Add up all the incomes
-- Divide by the number of people
+- Add up all the values
+- Divide by the number of values
 
 ## The mean
 
