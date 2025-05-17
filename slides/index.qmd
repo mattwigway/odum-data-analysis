@@ -3,4 +3,4 @@ title: Odum Data Analysis
 ---
 
 - [Data](commute_time.xlsx)
-- [Slides](slides.qmd)
+- [Slides](slides.html)

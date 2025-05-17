@@ -11,6 +11,7 @@ format:
     slide-number: true
     theme: [default, unc.scss]
     logo: UNC_logo_RGB.png
+    footer: https://projects.indicatrix.org/odum-data-analysis
 ---
 
 ```{r}
