@@ -134,7 +134,7 @@ sensors = read_excel(here::here("data/roadway_sensors.xlsx"))
 
 ```{r}
 head(ipums) |> gt() |>
-    fmt_number(columns=incwage_cpiu_2022, decimals=0) +
+    fmt_number(columns=incwage_cpiu_2022, decimals=0) |>
     tab_options(table.font.size=36)
 ```
 
@@ -281,20 +281,6 @@ All of these are true:
 
 - Data visualizations are less likely to put people to sleep than tables :sleeping:
 
-## The power of data visualization
-
-- Data visualization helps us make sense of large datasets
-- We can make conclusions and hypotheses that would be difficult from looking at the data alone
-- But, we can also mislead and misdirect
-
-## The power of data visualizations: Anscombe's quartet
-
-![@anscombe_graphs_1973a](img/anscombe.png){fig-alt="Scatterplots of four datasets with the same summary statistics, but very different shapes."}
-
-:::{.incremental}
-- These datasets all have the same basic descriptive statistics
-:::
-
 ## Histograms
 
 - A histogram visualizes a univariate (one variable) distribution
@@ -408,12 +394,6 @@ the_rent_is_too_damn_high %>%
         xlab("Year") +
         ylab("Median rent")
 ```
-
-## Multiple $y$ axes
-
-- Occasionally, you'll even see a graph with multiple $y$ axes
-
-![@bhagat-conway_rush_2023](img/line_2y.png){fig-alt="Line chart showing traffic flow and congestion on a California freeway, with separate axes for flow and level of congestion."}
 
 ## A more powerful tool: the R statistical programming language
 
