@@ -1,0 +1,57 @@
+```{julia}
+using DataFrames, DataFramesMeta, FredData, Dates, StatsBase
+import DBInterface, SQLite, TOML, CSV
+import Random: Xoshiro
+```
+
+```{julia}
+CONFIG = TOML.parsefile(joinpath(@__DIR__, ".Renviron"))
+DB_FILE = CONFIG["DATA_PATH"]
+
+conn = SQLite.DB(DB_FILE)
+```
+
+```{julia}
+data = DBInterface.execute(conn, "SELECT serial, empstat, incwage, age, sex, educ, tranwork, trantime, year, perwt FROM ipums WHERE empstat = 'Employed' AND tranwork NOT IN ('Worked at home', 'N/A')") |> DataFrame
+```
+
+```{julia}
+data.college = data.educ .∈ Ref(["4 years of college", "5+ years of college"])
+```
+
+## CPI adjustment
+
+```{julia}
+f = Fred();
+cpi = get_data(f, "CPIAUCSL")
+```
+
+```{julia}
+cpi = @chain cpi.data begin
+    @transform(:year = year.(:date))
+    @groupby(:year)
+    @combine(:cpi = mean(:value))
+end
+
+# rescale to 2022 dollars
+cpi.cpi = cpi.cpi ./ only(cpi.cpi[cpi.year .== 2022])
+
+data.year = parse.(Int64, data.year)
+
+leftjoin!(data, cpi, on=:year)
+
+data.incwage_cpiu_2022 = data.incwage ./ data.cpi
+
+data.age[data.age .== "90 (90+ in 1980 and 1990)"] .= "90"
+data.age = parse.(Int64, data.age)
+```
+
+```{julia}
+samp = data[
+    sample(Xoshiro(8675309), eachindex(eachrow(data)), weights(data.perwt), 50000),
+    [:year, :age, :sex, :college, :trantime, :incwage_cpiu_2022]
+]
+
+CSV.write("data/commute_time.csv", samp)
+```
+
