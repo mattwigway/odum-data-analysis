@@ -123,6 +123,7 @@ sensors = read_excel(here::here("data/roadway_sensors.xlsx"))
 - One-year data is only released for areas with over 65,000 people (40% of NC counties, 26% of all counties)
 - Five-year data is released all the way down to block groups (though margins of error can still be large)
 
+
 ## The public use microdata sample
 
 - Most Census data is distributed in aggregate form
@@ -230,7 +231,7 @@ All of these are true:
 
 ::::
 :::: {.column width="50%"}
-![credit: Sarah Dawson](../img/meme.png){fig-alt="A meme showing the mean and median as people, with the mean turning to look at a someone labeled as an outlier."}
+![credit: Sarah Dawson](img/meme.png){fig-alt="A meme showing the mean and median as people, with the mean turning to look at a someone labeled as an outlier."}
 ::::
 :::
 
