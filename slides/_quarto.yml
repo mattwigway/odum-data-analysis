@@ -1,0 +1,13 @@
+project:
+  title: "Odum Data Visualization"
+  output-dir: ../docs
+  resources: 
+    - commute_time.xlsx
+execute:
+  freeze: auto
+html-math-method: mathjax
+bibliography: bibliography.bib
+
+
+
+

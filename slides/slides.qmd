@@ -1,0 +1,645 @@
+---
+title: Introduction to Data Analysis with Excel and R
+author: Matt Bhagat-Conway
+execute:
+    echo: false
+    eval: true
+format:
+  revealjs:
+    width: 1600
+    height: 900
+    slide-number: true
+    theme: [default, unc.scss]
+    logo: UNC_logo_RGB.png
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(gt)
+library(readxl)
+library(ggunc)
+library(gridExtra)
+library(directlabels)
+library(tidycensus)
+
+ipums = read_csv(here::here("data/commute_time.csv"))
+clt = read_csv(here::here("data/charlotte_home_sales_2022.csv")) %>%
+    filter(amt_price > 10000)
+sensors = read_excel(here::here("data/roadway_sensors.xlsx"))
+```
+
+## About me
+
+- Professor in Odum Institute and in City and Regional Planning
+- Research on transportation decisionmaking and computational methods in planning
+- Three years as a software developer before grad school
+
+## What we'll cover today
+
+- Descriptive statistics
+- Data visualization
+- Regression
+
+## The tools
+
+- Excel: commonly used for simple data analyses, widely available
+- R (via Posit Cloud): programming environment for data analysis
+
+## Our research question: extreme commuting
+
+::: {.columns}
+:::: {.column width="60%"}
+::::: {.incremental}
+- How prevalent is "extreme commuting" (more than one hour each way)?
+- Does this vary by sex?
+- Has this changed over time?
+- Is the sex difference explained by age, income, or college education?
+:::::
+::::
+:::: {.column width="40%"}
+![](img/freeway.jpg){fig-alt="A freeway at sunset"}
+::::
+:::
+
+## Our data
+
+- 50,000 responses from the US Census and American Community Survey, from 2000–2022
+- Information on commute time, age, sex, income, and education status
+- Extracted from the [Integrated Public Use Microdata Sample USA](https://usa.ipums.org)
+
+## The Decennial Census
+
+::: {.columns}
+:::: {.column width="50%"}
+- By constitutional mandate, the Census Bureau conducts a full census of every person in the US every 10 years (since 1790)
+- Primary purpose is to apportion US House seats
+- Very limited information
+::::
+
+:::: {.column width="50%"}
+![](img/census20.png){fig-alt="2020 US decennial census form for information on one person, covering only age, sex, race, and Hispanic origin"}
+::::
+:::
+
+## The American Community Survey
+
+- Up until the 2000 Census, there was a "long-form" questionnaire that a fraction of households received, covering a lot more topics
+- Starting in 2005, the Census Bureau launched the American Community Survey
+- This samples only a fraction of the population, but covers a much wider variety of topics
+- Survey is conducted annually
+
+## Collecting the Decennial Census
+
+::: {.columns}
+:::: {.column width="60%"}
+
+- The Decennial Census is conducted every ten years, in years ending in zero
+- Most households are invited by mail, with an option to respond online or by mail
+- Some surveyed in person, some by phone
+- One of the highest-quality data collection efforts in the world, but not perfect—the 2020 Census [likely undercounted Hispanic, Black, and Native American residents](https://www.nytimes.com/2022/03/10/us/census-undercounted-population.html)
+- Cities and states [can appeal their counts if they think they were undercounted](https://apnews.com/article/2020-census-illinois-california-new-york-city-b75b58d009575b0a776bd36b1131323c)
+- All of this matters: [New York State was 89 people short of keeping all of their House seats](https://www.nytimes.com/2021/04/26/nyregion/new-york-census-congress.html)
+
+:::: 
+:::: {.column width="40%"}
+
+![The 2020 Census begins in January 2020 with in-person enumeration in Alaska ([photo: Claire Harbage, NPR](https://www.npr.org/2020/01/21/796703843/along-the-rim-of-alaska-the-once-a-decade-u-s-census-begins-in-toksook-bay))](img/alaska-npr.webp){fig-alt="Two men walk across a snowy street carrying Census 2020 tote bags"}
+
+::::
+:::
+
+## Collecting the ACS
+
+- The ACS is conducted annually
+- 3.54 million addresses sampled, with oversamples in rural areas
+- Response rates [generally 85-98%](https://www.census.gov/acs/www/methodology/sample-size-and-data-quality/response-rates/); some decline since the pandemic
+
+## One and five year ACS
+
+- To provide better estimates, the ACS is released in one- and five-year versions
+- The five-year versions aggregate the samples from five years to provide less sampling error and smaller margins of error
+- One-year data is only released for areas with over 65,000 people (40% of NC counties, 26% of all counties)
+- Five-year data is released all the way down to block groups (though margins of error can still be large)
+
+## The public use microdata sample
+
+- Most Census data is distributed in aggregate form
+- Averages for counties, towns, tracts (neighborhoods), etc.
+- For some analyses, you need disaggregate individual responses
+- The public use microdata sample is an anonymized subset of individual Census and ACS responses
+
+## Our data
+
+```{r}
+head(ipums) |> gt() |>
+    fmt_number(columns=incwage_cpiu_2022, decimals=0)
+```
+
+## Our data: columns
+
+- `year`: Year of data collection (for five year samples, end of five year period)
+- `age`: Age of respondent
+- `college`: Whether the respondent went to college
+- `trantime`: One-way commute time in minutes
+- `incwage_cpiu_2022`: Personal income, converted to 2022 dollars
+
+
+## What is statistics
+
+- At its heart, statistics is a tool to summarize _data_ into actionable _information_
+- Statistics can describe the current situation, forecast future outcomes, and understand relationships between variables
+- Algebra and calculus are math with too few numbers, statistics is math with too many
+
+## Descriptive vs. inferential statistics
+
+- Descriptive statistics describe patterns in data
+- Inferential statistics are focused on statistical "tests" to determine if data are consistent with hypotheses
+- Descriptive statistics are the most common in planning
+
+## Statistical data
+
+- Many consistent observations
+- Generally numerical
+- Representative (more on that below)
+
+## Measures of central tendency
+
+- The most common statistics are _measures of central tendency_
+- These statistics describe a dataset with a single number representing the center of the dataset
+
+
+## The mean
+
+- Most common measure of central tendency
+- The income everyone would have if income were evenly distributed
+
+## The mean
+
+- Add up all the incomes
+- Divide by the number of people
+
+## The mean
+
+$$
+\bar x = \frac{x_1 + x_2 + \cdots + x_n}{n}
+$$
+
+. . .
+
+[or]{.center-text}
+
+$$
+\bar x = \frac{\sum\limits_{i=1}^n x_i}{n}
+$$
+
+## Calculating means
+
+- Let's calculate the mean commute time in our data, using Excel
+- Download the data here: <https://projects.indicatrix.org/odum-data-analysis>
+- Open that file in Excel
+
+## Let's calculate the mean commute time
+
+- Enter into a blank cell:
+    - `=AVERAGE(E:E)`
+      or
+    - `=AVERAGE(E2:E50001)`
+- [25.3889]{.fragment}
+
+## Means can be wonky
+
+All of these are true:
+
+- The average American has 1.006 skeletons
+- The average starting salary for UNC Geography majors graduating in 1986 was $250,000 ($728,000 today)
+- The average US president has spent 2 seconds in a high-radiation area cleaning up after a nuclear meltdown
+
+## Why? Outliers
+
+- Very large or very small values have a strong effect on the mean
+- Because of how the mean is calculated, very large values are distributed over all observations
+
+## Why? Outliers
+
+![](img/mean_outliers.gif){fig-alt="Animation showing adding up three numbers shown as bars on a bar graph by stacking the bars together. One bar is much longer. The stacked bars are then divided showing that the outlier has a large impact on the mean"}
+
+## The median
+
+::: {.columns}
+:::: {.column width="50%"}
+
+- The median is the middle number in a set of numbers
+- The median is much less sensitive to outliers, because it is based on the numbers in the middle rather than all the numbers
+
+::::
+:::: {.column width="50%"}
+![credit: Sarah Dawson](../img/meme.png){fig-alt="A meme showing the mean and median as people, with the mean turning to look at a someone labeled as an outlier."}
+::::
+:::
+
+## Calculating the median
+
+- Sort the numbers
+- If there are an odd number of observations => find the middle one
+- If there are an even number of observations => take the mean of the two in the middle
+
+## Calculating the median in Excel
+
+- Enter into a blank cell:
+    - `=MEDIAN(E:E)`
+      or
+    - `=MEDIAN(E2:E50001)`
+- [20]{.fragment}
+
+## Medians and outliers
+
+- What happens to the mean if someone's commute time increase from 30 minutes to 120?
+- What happens to the median?
+- Try it (edit cell E4)
+
+## When to use medians
+
+- Generally, any dataset likely to have outliers
+- Commonly used for
+    - Income
+    - Housing prices
+
+## The relationship between the median and the mean
+
+- The mean will be pulled in the direction of any outliers
+- So, in a datset with large outliers, the mean will be higher than the median (e.g. income)
+- Opposite in a dataset with small outliers (e.g. age at cancer diagnosis)
+
+## Calculating a proportion in Excel
+
+- What we really want to know is what percentage of people have very long commutes, not just what the mean or median is
+- This code in Excel will do that: `=COUNTIF(E:E, "> 60") / COUNT(E:E)`
+
+## Data visualization
+
+- Many people are visual thinkers
+- Data visualization can remove the need to understand exact numbers and show the big picture
+
+. . .
+
+- Data visualizations are less likely to put people to sleep than tables :sleeping:
+
+## The power of data visualization
+
+- Data visualization helps us make sense of large datasets
+- We can make conclusions and hypotheses that would be difficult from looking at the data alone
+- But, we can also mislead and misdirect
+
+## The power of data visualizations: Anscombe's quartet
+
+![@anscombe_graphs_1973a](img/anscombe.png){fig-alt="Scatterplots of four datasets with the same summary statistics, but very different shapes."}
+
+:::{.incremental}
+- These datasets all have the same basic descriptive statistics
+:::
+
+## Histograms
+
+- A histogram visualizes a univariate (one variable) distribution
+```{r}
+#| fig-alt: Two histograms (bar plots of the frequency of values in different mutually exclusive categories). The left histogram shows that home sale price is heavily right-skewed. The right histogram shows that daily traffic volumes at sensors in California is relatively symmetrical.
+histprice = ggplot(clt, aes(x=amt_price)) +
+    geom_histogram(fill="#7BAFD4", color="#7BAFD4") +
+    xlab("Home sale price,\nMecklenburg County, NC, 2022\nData: Mecklenburg County GIS") +
+    scale_x_continuous(labels=scales::comma)
+
+histmovein = ggplot(sensors, aes(x=`Post-lockdown volume`)) +
+    geom_histogram(bins=15, fill="#7BAFD4", color="#7BAFD4") +
+    xlab("Daily traffic volume, California freeway sensors\nData: Caltrans")
+
+grid.arrange(histprice, histmovein, ncol=2)
+```
+
+## Creating a histogram in Excel
+
+- Select the column you want to create a histogram of
+- Choose Insert -> Charts -> Statistical -> Histogram
+- By double-clicking on the bars you can edit the number of bins, bin size, how outliers are handled
+- Histograms should not have gaps between the bars even though they do by default in Excel
+    - After double-clicking on the bars, choose the Fill and Line tab (paint can icon) and set the border to "solid line" to fill the gaps
+
+## Boxplots/box and whisker plots
+
+- Box plots visualize data by showing the median, 25th and 25th percentiles, tails, and outliers
+- The center line is the median, the top of the box is the 75th percentile, and the bottom of the box is the 25th percentile
+- Whiskers _generally_ extend to largest/smallest data value less than 1.5 $\times$ interquartile range from the ends of the box
+    - Sometimes 5th/95th percentiles
+- Points beyond these are plotted individually as outliers
+
+## Boxplots/box and whisker plots
+
+```{r}
+#| fig-alt: A box-and-whisker plot of home sale prices in Charlotte, showing the median around $375,000, the 25th percentile around $300,000, and 75th percentile around $460,000. The whiskers extend down to around $75,000 and up to $700,000. There are outliers plotted above and below the boxplot.
+set.seed(400042)
+clt_sampl = clt %>%
+    filter(amt_price <= 1e6) %>%
+    slice_sample(n=500)
+    
+clt_sampl %>%
+    ggplot(aes(y=amt_price)) +
+    geom_boxplot() +
+    scale_y_continuous(labels=scales::comma) +
+    ylab("Sale price, Mecklenburg County home sales, 2022") +
+    theme(axis.text.x = element_blank())
+```
+
+## Making a boxplot in Excel
+
+- Select the data you want to create a boxplot for (let's use travel time)
+- Insert -> Charts -> Statistical -> Box and Whisker
+
+## Boxplots/box and whisker plots
+
+- Often, you will see multiple boxplots presented next to one another
+```{r}
+#| fig-alt: Three boxplots of 2022 home sale values in Mecklenburg County. Attached single family and detached single family homes are relatively similar, with the 25th percentile, median, 75th percentile, and whiskers slightly higher for detached homes. Condominiums have a very high sale value, with a median around $775,000. There are many outliers for single family homes, but none for condominums, likely because there are few condominium sales overall.
+clt %>%
+    filter(amt_price < 1e6) %>%
+    ggplot(aes(x=hometype, y=amt_price)) +
+    geom_boxplot() +
+    scale_y_continuous(labels=scales::comma) +
+    ylab("Sale price, Mecklenburg County home sales, 2022") +
+    xlab("Home type")
+```
+
+## Line charts
+
+::: {.incremental}
+- Line charts suggest change over time, so the $x$ axis should always be time
+- This graph also shows a common way graphs can mislead
+- look at the extents of the $y$ axis
+:::
+
+```{r}
+#| fig-alt: Line chart showing significant rent increases in Orange County since 2008. Y axis starts at $700, which exaggerates the size of the change
+
+the_rent_is_too_damn_high = map(c(2008:2019, 2021:2022), function (year) {
+    get_acs(geography="county", state="NC", county=c("Orange", "Durham", "Wake"), table="B25058", survey="acs1", year=year) %>%
+        mutate(year=year) %>%
+        return()
+}) %>%
+    list_rbind() %>%
+    mutate(County=str_remove(NAME, " County, North Carolina"))
+
+
+the_rent_is_too_damn_high %>%
+    filter(NAME=="Orange County, North Carolina") %>%
+    ggplot(aes(x=year, y=estimate)) +
+        geom_line() +
+        xlab("Year") +
+        ylab("Median rent") +
+        ggtitle("Median rent in Orange County")
+```
+
+## Multiple lines
+
+- It's common to have multiple lines on line charts
+
+```{r}
+#| fig-alt: Line chart showing significant rent increases in Orange, Durham, and Wake Counties since 2008.
+the_rent_is_too_damn_high %>%
+    ggplot(aes(x=year, y=estimate, color=County)) +
+        geom_line() +
+                # https://stackoverflow.com/questions/29357612
+  geom_dl(aes(label = County), method = list(dl.combine("first.points", "last.points")), cex = 0.8) +
+        xlim(2007, 2023) +
+        xlab("Year") +
+        ylab("Median rent")
+```
+
+## Multiple $y$ axes
+
+- Occasionally, you'll even see a graph with multiple $y$ axes
+
+![@bhagat-conway_rush_2023](img/line_2y.png){fig-alt="Line chart showing traffic flow and congestion on a California freeway, with separate axes for flow and level of congestion."}
+
+## A more powerful tool: the R statistical programming language
+
+- While Excel is a great tool, it has limitations
+- We are going to finish out the exercises using the [R statistical programming environment](https://r-project.org)
+- R and RStudio (frontend) are free
+- We're going to use a cloud version called [Posit Cloud](https://posit.cloud), but I would generally recommend installing R on your own computer
+
+## Project setup
+
+- Log in to <https://posit.cloud>
+- Select new project -> new project from git repository
+- Enter <https://github.com/mattwigway/odum-data-analysis.git>
+
+## Descriptive statistics and histograms in R
+
+- Hands-on exercise
+
+## Confidence intervals
+
+- We estimated the mean commute based on our sample
+- We want to know how much we might be off by relative the correct answer if we'd talked to everyone in the US
+- This is often presented as a _confidence interval_ or a _margin of error_
+
+## Confidence intervals
+
+::: {.incremental}
+- A confidence interval is a range and a probability
+- For instance, a 90% confidence interval for the mean travel time to work in Chapel Hill is [18.7--20.5](https://censusreporter.org/profiles/16000US3711800-chapel-hill-nc/)
+- The interpretation of this is that, based on the sample size of the survey, there is a 90% probability that the actual mean commute time is in this range
+:::
+
+## Margins of error
+
+- In the news media, margins of error are more common than confidence intervals
+- The mean commute time in Chapel Hill is 19.6 minutes ± 0.9 minutes, with an 90% confidence
+- This is equivalent, although the media often leaves out the confidence level
+
+## How do we figure out how far off we are if we don't know the right answer?
+
+- Intuitively, the more people we talk to, the more accurate our estimate is likely to be
+- This is formalized by something called the _Central Limit Theorem_
+- The Central Limit Theorem expresses the _sampling distribution_ of some statistic (e.g. a mean) as a function of the original distribution of that value
+
+## Probability distributions
+
+```{r}
+##| fig-cap: Height distribution of US women 20+, [CDC](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf)
+female_height()
+```
+
+- The x axis is whatever your variable is
+- The y axis is the probability of observing that value*
+
+## Probability distributions
+
+```{r}
+##| fig-cap: Height distribution of US women 20+, [CDC](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf)
+female_height() +
+    geom_vline(xintercept=60, color="red")
+```
+
+::: {.incremental}
+- What is the probability that a randomly chosen American woman is 5 feet tall?
+    - [0.06]{.fragment .box-answer .strike}
+:::
+
+## Probability distributions
+
+```{r}
+##| fig-cap: Height distribution of US women 20+, [CDC](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf)
+female_height()
+```
+
+- Is anybody likely to be exactly 5 feet tall, not 5 feet 1/128th inch or 4 feet 127/128th inch?
+
+## Probability distributions
+
+```{r}
+##| fig-cap: Height distribution of US women 20+, [CDC](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf)
+
+fill_area = tibble(
+    xf = seq(59.5, 60.5, 0.01),
+    yf = dnorm(seq(59.5, 60.5, 0.01), mean=63.5, sd=2.74)
+)
+
+prob = pnorm(60.5, mean=63.5, sd=2.74) - pnorm(59.5, mean=63.5, sd=2.74)
+
+female_height() +
+    geom_area(data=fill_area, aes(x=xf, y=yf), fill="red") +
+    annotate("segment", xend=61, x=64, yend=0.04, y=0.05, arrow=arrow(), color="#13294b", size=2) +
+    annotate("text", x=65, y=0.05, label=as.character(round(prob, digits=2)), color="#13294b", hjust=0, size=7)
+    
+```
+
+- We can only define the probability for a range of heights, for instance 4' 11-1/2" to 5' 1/2"
+- The probability of any range is the **area** of the probability distribution above that range
+    - If you've taken calculus, you might call this an _integral_
+- The area under the _entire_ distribution is 1 - because everyone has a height
+
+
+## Sampling distributions
+
+::: {.incremental}
+- Suppose you take a simple random sample of 100 women and find that they have a mean height of 5' 4"
+- You might take another sample, and find a mean height of 5' 3", or 5' 5"
+- The _sampling distribution_ is the distribution _of these means_
+:::
+
+## Sampling distributions
+
+::: {.columns}
+:::: {.column width="50%"}
+```{r}
+##| fig-cap: Data distribution
+female_height()
+```
+::::
+
+:::: {.column width="50%"}
+```{r}
+##| fig-cap: Sampling distribution, n=50
+
+x = seq(42, 84, 0.1)
+## converting std err back to std dev
+Female = dnorm(x, mean=63.5, sd=2.74 / sqrt(50))
+tibble(x=x, Female=Female) %>%
+    ggplot(aes(x=x, y=Female)) +
+        geom_line() +
+        scale_x_continuous(labels=feetinches, expand=c(0,0)) +
+        xlab("Mean height") +
+        ylab("Probability") +
+        theme(axis.text=element_text(size=24), axis.title=element_text(size=24))
+```
+::::
+:::
+
+## The Central Limit Theorem
+
+- The Central Limit Theorem is basically what makes statistics work
+- It states that as samples get larger, statistics from those samples get closer to the corresponding parameters from the population
+- It mathematically defines how much closer
+- This lets us quantify how likely it is that we are off by a certain amount
+- The 95% margin of error is the amount that we are 95% certain we are not off by more than
+
+## The Central Limit Theorem in real life
+
+- Airline flight overbooking
+- Grocery store stocking
+- Power demand
+- Traffic
+
+## The hypothesis test
+
+- A closely related concept is the hypothesis test
+- In hypothesis testing, we formulate two hypotheses
+- $H_0$ or the _null hypothesis_: the mean is not different
+- $H_1$ or the _alternative hypothesis_: the mean is different
+
+## Hypothesis tests and $p$-values
+
+- The sampling distribution allows us to calculate the probability that we would get the data we observed, if $H_0$ were true
+- If it is sufficiently small, we _reject_ the null hypothesis and _accept_ the alternative hypothesis
+- Otherwise, we _fail to reject_ the null hypothesis (we cannot accept the null hypothesis)
+- Oftentimes, the hypothesis will be that means/proportions in two groups are equal
+
+## Confidence intervals, boxplots, and hypothesis tests in R
+
+- Hands-on exercise
+
+## Grouped data analysis, aka split-apply-combine
+
+- Often, we want to calculate statistics for particular subgroups in the data
+- In R, `group_by` lets us split the dataset into sub-datasets based on unique values in a column
+- `summarize` lets us compute statistics on each
+
+
+## Simple linear regression
+
+```{r}
+set.seed(56519)
+x = rnorm(100)
+y1 = (x * 0.8 + rnorm(100)) * 0.2
+y2 = y1 * 5
+
+bind_rows(
+    tibble(x=x, y=y1, which=1),
+    tibble(x=x, y=y2, which=2)
+) %>%
+    ggplot(aes(x=x, y=y)) +
+        geom_point() +
+        facet_wrap(~which) +
+        xlab(paste0("Correlation: ", round(cor(x, y1), digits=2)))
+```
+
+- We want to find the line that best "fits" our data
+
+## Regression
+
+- Mathematically, we are estimating this equation
+$$
+y = mx + b
+$$
+
+. . .
+
+$$
+y = \alpha + \beta x
+$$
+
+- $y$ is also known as the _dependent variable_
+- $x$ is the _independent variable_
+- $\alpha$ and $\beta$ are values or _coefficients_ the regression estimates
+
+## Multiple linear regression
+
+- Simple linear regression can only evaluate the relationship between one variable and another
+- Multiple linear regression explains evaluates the relationship between _two or more_ independent variables and one _dependent_ variable
+- The interpretation is the relationship between the dependent and independent variables, holding the other independent variables constant (e.g. the relationship between sex and commute time, holding education level constant)
+
+## Regression in R
+
+- Hands-on exercise
+
+## Questions?
