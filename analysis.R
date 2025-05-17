@@ -79,10 +79,11 @@ data |>
     ggplot(aes(x=sex, y=trantime)) +
         geom_boxplot()
 
-# There do not appear to many differences in commute time between men and women overall, but the extreme
-# commutes don't show up very well in a boxplot.
-# We can also do a hypothesis test to see if the means differ. This requires a little data reshaping.
-# first, calculate means
+# There do not appear to many differences in commute time between men and women overall,
+# but the extreme commutes don't show up very well in a boxplot.
+# We can also do a hypothesis test to see if the proportions differ. This requires a
+# little data reshaping.
+# first, calculate proportions
 data |>
     group_by(sex) |>
     summarize(prop_extreme=mean(trantime > 60)) |>
