@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Matt Bhagat-Conway">
+  <title>Introduction to Data Analysis with Excel and R</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Introduction to Data Analysis with Excel and R</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matt Bhagat-Conway 
+</div>
+</div>
+</div>
+
+</section>
+<section id="about-me" class="slide level2">
+<h2>About me</h2>
+<ul>
+<li>Professor in Odum Institute and in City and Regional Planning</li>
+<li>Research on transportation decisionmaking and computational methods in planning</li>
+<li>Three years as a software developer before grad school</li>
+</ul>
+</section>
+<section id="what-well-cover-today" class="slide level2">
+<h2>What we’ll cover today</h2>
+<ul>
+<li>Descriptive statistics</li>
+<li>Data visualization</li>
+<li>Regression</li>
+</ul>
+</section>
+<section id="the-tools" class="slide level2">
+<h2>The tools</h2>
+<ul>
+<li>Excel: commonly used for simple data analyses, widely available</li>
+<li>R (via Posit Cloud): programming environment for data analysis</li>
+</ul>
+</section>
+<section id="our-research-question-extreme-commuting" class="slide level2">
+<h2>Our research question: extreme commuting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div>
+<ul>
+<li class="fragment">How prevalent is “extreme commuting” (more than one hour each way)?</li>
+<li class="fragment">Does this vary by sex?</li>
+<li class="fragment">Has this changed over time?</li>
+<li class="fragment">Is the sex difference explained by age, income, or college education?</li>
+</ul>
+</div>
+</div><div class="column" style="width:40%;">
+<p><img data-src="img/freeway.jpg" alt="A freeway at sunset"></p>
+</div></div>
+</section>
+<section id="our-data" class="slide level2">
+<h2>Our data</h2>
+<ul>
+<li>50,000 responses from the US Census and American Community Survey, from 2000–2022</li>
+<li>Information on commute time, age, sex, income, and education status</li>
+<li>Extracted from the <a href="https://usa.ipums.org">Integrated Public Use Microdata Sample USA</a></li>
+</ul>
+</section>
+<section id="the-decennial-census" class="slide level2">
+<h2>The Decennial Census</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>By constitutional mandate, the Census Bureau conducts a full census of every person in the US every 10 years (since 1790)</li>
+<li>Primary purpose is to apportion US House seats</li>
+<li>Very limited information</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/census20.png" alt="2020 US decennial census form for information on one person, covering only age, sex, race, and Hispanic origin"></p>
+</div></div>
+</section>
+<section id="the-american-community-survey" class="slide level2">
+<h2>The American Community Survey</h2>
+<ul>
+<li>Up until the 2000 Census, there was a “long-form” questionnaire that a fraction of households received, covering a lot more topics</li>
+<li>Starting in 2005, the Census Bureau launched the American Community Survey</li>
+<li>This samples only a fraction of the population, but covers a much wider variety of topics</li>
+<li>Survey is conducted annually</li>
+</ul>
+</section>
+<section id="collecting-the-decennial-census" class="slide level2">
+<h2>Collecting the Decennial Census</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>The Decennial Census is conducted every ten years, in years ending in zero</li>
+<li>Most households are invited by mail, with an option to respond online or by mail</li>
+<li>Some surveyed in person, some by phone</li>
+<li>One of the highest-quality data collection efforts in the world, but not perfect—the 2020 Census <a href="https://www.nytimes.com/2022/03/10/us/census-undercounted-population.html">likely undercounted Hispanic, Black, and Native American residents</a></li>
+<li>Cities and states <a href="https://apnews.com/article/2020-census-illinois-california-new-york-city-b75b58d009575b0a776bd36b1131323c">can appeal their counts if they think they were undercounted</a></li>
+<li>All of this matters: <a href="https://www.nytimes.com/2021/04/26/nyregion/new-york-census-congress.html">New York State was 89 people short of keeping all of their House seats</a></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/alaska-npr.webp" alt="Two men walk across a snowy street carrying Census 2020 tote bags"></p>
+<figcaption>The 2020 Census begins in January 2020 with in-person enumeration in Alaska (<a href="https://www.npr.org/2020/01/21/796703843/along-the-rim-of-alaska-the-once-a-decade-u-s-census-begins-in-toksook-bay">photo: Claire Harbage, NPR</a>)</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="collecting-the-acs" class="slide level2">
+<h2>Collecting the ACS</h2>
+<ul>
+<li>The ACS is conducted annually</li>
+<li>3.54 million addresses sampled, with oversamples in rural areas</li>
+<li>Response rates <a href="https://www.census.gov/acs/www/methodology/sample-size-and-data-quality/response-rates/">generally 85-98%</a>; some decline since the pandemic</li>
+</ul>
+</section>
+<section id="one-and-five-year-acs" class="slide level2">
+<h2>One and five year ACS</h2>
+<ul>
+<li>To provide better estimates, the ACS is released in one- and five-year versions</li>
+<li>The five-year versions aggregate the samples from five years to provide less sampling error and smaller margins of error</li>
+<li>One-year data is only released for areas with over 65,000 people (40% of NC counties, 26% of all counties)</li>
+<li>Five-year data is released all the way down to block groups (though margins of error can still be large)</li>
+</ul>
+</section>
+<section id="the-public-use-microdata-sample" class="slide level2">
+<h2>The public use microdata sample</h2>
+<ul>
+<li>Most Census data is distributed in aggregate form</li>
+<li>Averages for counties, towns, tracts (neighborhoods), etc.</li>
+<li>For some analyses, you need disaggregate individual responses</li>
+<li>The public use microdata sample is an anonymized subset of individual Census and ACS responses</li>
+</ul>
+</section>
+<section id="our-data-1" class="slide level2">
+<h2>Our data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="vfbvhyezgn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vfbvhyezgn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#vfbvhyezgn thead, #vfbvhyezgn tbody, #vfbvhyezgn tfoot, #vfbvhyezgn tr, #vfbvhyezgn td, #vfbvhyezgn th {
+  border-style: none;
+}
+
+#vfbvhyezgn p {
+  margin: 0;
+  padding: 0;
+}
+
+#vfbvhyezgn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vfbvhyezgn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vfbvhyezgn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vfbvhyezgn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vfbvhyezgn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vfbvhyezgn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vfbvhyezgn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vfbvhyezgn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vfbvhyezgn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#vfbvhyezgn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vfbvhyezgn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vfbvhyezgn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vfbvhyezgn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vfbvhyezgn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vfbvhyezgn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vfbvhyezgn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vfbvhyezgn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vfbvhyezgn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#vfbvhyezgn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vfbvhyezgn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vfbvhyezgn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vfbvhyezgn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vfbvhyezgn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vfbvhyezgn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vfbvhyezgn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vfbvhyezgn .gt_left {
+  text-align: left;
+}
+
+#vfbvhyezgn .gt_center {
+  text-align: center;
+}
+
+#vfbvhyezgn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vfbvhyezgn .gt_font_normal {
+  font-weight: normal;
+}
+
+#vfbvhyezgn .gt_font_bold {
+  font-weight: bold;
+}
+
+#vfbvhyezgn .gt_font_italic {
+  font-style: italic;
+}
+
+#vfbvhyezgn .gt_super {
+  font-size: 65%;
+}
+
+#vfbvhyezgn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#vfbvhyezgn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vfbvhyezgn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vfbvhyezgn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vfbvhyezgn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vfbvhyezgn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vfbvhyezgn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#vfbvhyezgn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#vfbvhyezgn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="year" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">year</th>
+<th id="age" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">age</th>
+<th id="sex" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">sex</th>
+<th id="college" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">college</th>
+<th id="trantime" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">trantime</th>
+<th id="incwage_cpiu_2022" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">incwage_cpiu_2022</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="year">2019</td>
+<td class="gt_row gt_right" headers="age">41</td>
+<td class="gt_row gt_left" headers="sex">Male</td>
+<td class="gt_row gt_center" headers="college">FALSE</td>
+<td class="gt_row gt_right" headers="trantime">15</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">460,138</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="year">2009</td>
+<td class="gt_row gt_right" headers="age">54</td>
+<td class="gt_row gt_left" headers="sex">Female</td>
+<td class="gt_row gt_center" headers="college">TRUE</td>
+<td class="gt_row gt_right" headers="trantime">20</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">43,538</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="year">2022</td>
+<td class="gt_row gt_right" headers="age">37</td>
+<td class="gt_row gt_left" headers="sex">Male</td>
+<td class="gt_row gt_center" headers="college">FALSE</td>
+<td class="gt_row gt_right" headers="trantime">30</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">25,000</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="year">2009</td>
+<td class="gt_row gt_right" headers="age">54</td>
+<td class="gt_row gt_left" headers="sex">Female</td>
+<td class="gt_row gt_center" headers="college">FALSE</td>
+<td class="gt_row gt_right" headers="trantime">15</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">84,556</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="year">2019</td>
+<td class="gt_row gt_right" headers="age">35</td>
+<td class="gt_row gt_left" headers="sex">Female</td>
+<td class="gt_row gt_center" headers="college">TRUE</td>
+<td class="gt_row gt_right" headers="trantime">25</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">37,409</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="year">2000</td>
+<td class="gt_row gt_right" headers="age">27</td>
+<td class="gt_row gt_left" headers="sex">Female</td>
+<td class="gt_row gt_center" headers="college">FALSE</td>
+<td class="gt_row gt_right" headers="trantime">15</td>
+<td class="gt_row gt_right" headers="incwage_cpiu_2022">30,590</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="our-data-columns" class="slide level2">
+<h2>Our data: columns</h2>
+<ul>
+<li><code>year</code>: Year of data collection (for five year samples, end of five year period)</li>
+<li><code>age</code>: Age of respondent</li>
+<li><code>college</code>: Whether the respondent went to college</li>
+<li><code>trantime</code>: One-way commute time in minutes</li>
+<li><code>incwage_cpiu_2022</code>: Personal income, converted to 2022 dollars</li>
+</ul>
+</section>
+<section id="what-is-statistics" class="slide level2">
+<h2>What is statistics</h2>
+<ul>
+<li>At its heart, statistics is a tool to summarize <em>data</em> into actionable <em>information</em></li>
+<li>Statistics can describe the current situation, forecast future outcomes, and understand relationships between variables</li>
+<li>Algebra and calculus are math with too few numbers, statistics is math with too many</li>
+</ul>
+</section>
+<section id="descriptive-vs.-inferential-statistics" class="slide level2">
+<h2>Descriptive vs.&nbsp;inferential statistics</h2>
+<ul>
+<li>Descriptive statistics describe patterns in data</li>
+<li>Inferential statistics are focused on statistical “tests” to determine if data are consistent with hypotheses</li>
+<li>Descriptive statistics are the most common in planning</li>
+</ul>
+</section>
+<section id="statistical-data" class="slide level2">
+<h2>Statistical data</h2>
+<ul>
+<li>Many consistent observations</li>
+<li>Generally numerical</li>
+<li>Representative (more on that below)</li>
+</ul>
+</section>
+<section id="measures-of-central-tendency" class="slide level2">
+<h2>Measures of central tendency</h2>
+<ul>
+<li>The most common statistics are <em>measures of central tendency</em></li>
+<li>These statistics describe a dataset with a single number representing the center of the dataset</li>
+</ul>
+</section>
+<section id="the-mean" class="slide level2">
+<h2>The mean</h2>
+<ul>
+<li>Most common measure of central tendency</li>
+<li>The income everyone would have if income were evenly distributed</li>
+</ul>
+</section>
+<section id="the-mean-1" class="slide level2">
+<h2>The mean</h2>
+<ul>
+<li>Add up all the incomes</li>
+<li>Divide by the number of people</li>
+</ul>
+</section>
+<section id="the-mean-2" class="slide level2">
+<h2>The mean</h2>
+<p><span class="math display">\[
+\bar x = \frac{x_1 + x_2 + \cdots + x_n}{n}
+\]</span></p>
+<div class="fragment">
+<p><span class="center-text">or</span></p>
+<p><span class="math display">\[
+\bar x = \frac{\sum\limits_{i=1}^n x_i}{n}
+\]</span></p>
+</div>
+</section>
+<section id="calculating-means" class="slide level2">
+<h2>Calculating means</h2>
+<ul>
+<li>Let’s calculate the mean commute time in our data, using Excel</li>
+<li>Download the data here: <a href="https://projects.indicatrix.org/odum-data-analysis" class="uri">https://projects.indicatrix.org/odum-data-analysis</a></li>
+<li>Open that file in Excel</li>
+</ul>
+</section>
+<section id="lets-calculate-the-mean-commute-time" class="slide level2">
+<h2>Let’s calculate the mean commute time</h2>
+<ul>
+<li>Enter into a blank cell:
+<ul>
+<li><code>=AVERAGE(E:E)</code> or</li>
+<li><code>=AVERAGE(E2:E50001)</code></li>
+</ul></li>
+<li><span class="fragment">25.3889</span></li>
+</ul>
+</section>
+<section id="means-can-be-wonky" class="slide level2">
+<h2>Means can be wonky</h2>
+<p>All of these are true:</p>
+<ul>
+<li>The average American has 1.006 skeletons</li>
+<li>The average starting salary for UNC Geography majors graduating in 1986 was $250,000 ($728,000 today)</li>
+<li>The average US president has spent 2 seconds in a high-radiation area cleaning up after a nuclear meltdown</li>
+</ul>
+</section>
+<section id="why-outliers" class="slide level2">
+<h2>Why? Outliers</h2>
+<ul>
+<li>Very large or very small values have a strong effect on the mean</li>
+<li>Because of how the mean is calculated, very large values are distributed over all observations</li>
+</ul>
+</section>
+<section id="why-outliers-1" class="slide level2">
+<h2>Why? Outliers</h2>
+
+<img data-src="img/mean_outliers.gif" alt="Animation showing adding up three numbers shown as bars on a bar graph by stacking the bars together. One bar is much longer. The stacked bars are then divided showing that the outlier has a large impact on the mean" class="r-stretch"></section>
+<section id="the-median" class="slide level2">
+<h2>The median</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>The median is the middle number in a set of numbers</li>
+<li>The median is much less sensitive to outliers, because it is based on the numbers in the middle rather than all the numbers</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../img/meme.png" alt="A meme showing the mean and median as people, with the mean turning to look at a someone labeled as an outlier."></p>
+<figcaption>credit: Sarah Dawson</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="calculating-the-median" class="slide level2">
+<h2>Calculating the median</h2>
+<ul>
+<li>Sort the numbers</li>
+<li>If there are an odd number of observations =&gt; find the middle one</li>
+<li>If there are an even number of observations =&gt; take the mean of the two in the middle</li>
+</ul>
+</section>
+<section id="calculating-the-median-in-excel" class="slide level2">
+<h2>Calculating the median in Excel</h2>
+<ul>
+<li>Enter into a blank cell:
+<ul>
+<li><code>=MEDIAN(E:E)</code> or</li>
+<li><code>=MEDIAN(E2:E50001)</code></li>
+</ul></li>
+<li><span class="fragment">20</span></li>
+</ul>
+</section>
+<section id="medians-and-outliers" class="slide level2">
+<h2>Medians and outliers</h2>
+<ul>
+<li>What happens to the mean if someone’s commute time increase from 30 minutes to 120?</li>
+<li>What happens to the median?</li>
+<li>Try it (edit cell E4)</li>
+</ul>
+</section>
+<section id="when-to-use-medians" class="slide level2">
+<h2>When to use medians</h2>
+<ul>
+<li>Generally, any dataset likely to have outliers</li>
+<li>Commonly used for
+<ul>
+<li>Income</li>
+<li>Housing prices</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-relationship-between-the-median-and-the-mean" class="slide level2">
+<h2>The relationship between the median and the mean</h2>
+<ul>
+<li>The mean will be pulled in the direction of any outliers</li>
+<li>So, in a datset with large outliers, the mean will be higher than the median (e.g.&nbsp;income)</li>
+<li>Opposite in a dataset with small outliers (e.g.&nbsp;age at cancer diagnosis)</li>
+</ul>
+</section>
+<section id="calculating-a-proportion-in-excel" class="slide level2">
+<h2>Calculating a proportion in Excel</h2>
+<ul>
+<li>What we really want to know is what percentage of people have very long commutes, not just what the mean or median is</li>
+<li>This code in Excel will do that: <code>=COUNTIF(E:E, "&gt; 60") / COUNT(E:E)</code></li>
+</ul>
+</section>
+<section id="data-visualization" class="slide level2">
+<h2>Data visualization</h2>
+<ul>
+<li>Many people are visual thinkers</li>
+<li>Data visualization can remove the need to understand exact numbers and show the big picture</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Data visualizations are less likely to put people to sleep than tables :sleeping:</li>
+</ul>
+</div>
+</section>
+<section id="the-power-of-data-visualization" class="slide level2">
+<h2>The power of data visualization</h2>
+<ul>
+<li>Data visualization helps us make sense of large datasets</li>
+<li>We can make conclusions and hypotheses that would be difficult from looking at the data alone</li>
+<li>But, we can also mislead and misdirect</li>
+</ul>
+</section>
+<section id="the-power-of-data-visualizations-anscombes-quartet" class="slide level2">
+<h2>The power of data visualizations: Anscombe’s quartet</h2>
+
+<img data-src="img/anscombe.png" alt="Scatterplots of four datasets with the same summary statistics, but very different shapes." class="r-stretch quarto-figure-center"><p class="caption"><span class="citation" data-cites="anscombe_graphs_1973a">Anscombe (<a href="#/questions" role="doc-biblioref" onclick="">1973</a>)</span></p><div>
+<ul>
+<li class="fragment">These datasets all have the same basic descriptive statistics</li>
+</ul>
+</div>
+</section>
+<section id="histograms" class="slide level2">
+<h2>Histograms</h2>
+<ul>
+<li>A histogram visualizes a univariate (one variable) distribution</li>
+</ul>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-3-1.png" alt="Two histograms (bar plots of the frequency of values in different mutually exclusive categories). The left histogram shows that home sale price is heavily right-skewed. The right histogram shows that daily traffic volumes at sensors in California is relatively symmetrical." width="960" class="r-stretch"></section>
+<section id="creating-a-histogram-in-excel" class="slide level2">
+<h2>Creating a histogram in Excel</h2>
+<ul>
+<li>Select the column you want to create a histogram of</li>
+<li>Choose Insert -&gt; Charts -&gt; Statistical -&gt; Histogram</li>
+<li>By double-clicking on the bars you can edit the number of bins, bin size, how outliers are handled</li>
+<li>Histograms should not have gaps between the bars even though they do by default in Excel
+<ul>
+<li>After double-clicking on the bars, choose the Fill and Line tab (paint can icon) and set the border to “solid line” to fill the gaps</li>
+</ul></li>
+</ul>
+</section>
+<section id="boxplotsbox-and-whisker-plots" class="slide level2">
+<h2>Boxplots/box and whisker plots</h2>
+<ul>
+<li>Box plots visualize data by showing the median, 25th and 25th percentiles, tails, and outliers</li>
+<li>The center line is the median, the top of the box is the 75th percentile, and the bottom of the box is the 25th percentile</li>
+<li>Whiskers <em>generally</em> extend to largest/smallest data value less than 1.5 <span class="math inline">\(\times\)</span> interquartile range from the ends of the box
+<ul>
+<li>Sometimes 5th/95th percentiles</li>
+</ul></li>
+<li>Points beyond these are plotted individually as outliers</li>
+</ul>
+</section>
+<section id="boxplotsbox-and-whisker-plots-1" class="slide level2">
+<h2>Boxplots/box and whisker plots</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-4-1.png" alt="A box-and-whisker plot of home sale prices in Charlotte, showing the median around $375,000, the 25th percentile around $300,000, and 75th percentile around $460,000. The whiskers extend down to around $75,000 and up to $700,000. There are outliers plotted above and below the boxplot." width="960" class="r-stretch"></section>
+<section id="making-a-boxplot-in-excel" class="slide level2">
+<h2>Making a boxplot in Excel</h2>
+<ul>
+<li>Select the data you want to create a boxplot for (let’s use travel time)</li>
+<li>Insert -&gt; Charts -&gt; Statistical -&gt; Box and Whisker</li>
+</ul>
+</section>
+<section id="boxplotsbox-and-whisker-plots-2" class="slide level2">
+<h2>Boxplots/box and whisker plots</h2>
+<ul>
+<li>Often, you will see multiple boxplots presented next to one another</li>
+</ul>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-5-1.png" alt="Three boxplots of 2022 home sale values in Mecklenburg County. Attached single family and detached single family homes are relatively similar, with the 25th percentile, median, 75th percentile, and whiskers slightly higher for detached homes. Condominiums have a very high sale value, with a median around $775,000. There are many outliers for single family homes, but none for condominums, likely because there are few condominium sales overall." width="960" class="r-stretch"></section>
+<section id="line-charts" class="slide level2">
+<h2>Line charts</h2>
+<div>
+<ul>
+<li class="fragment">Line charts suggest change over time, so the <span class="math inline">\(x\)</span> axis should always be time</li>
+<li class="fragment">This graph also shows a common way graphs can mislead</li>
+<li class="fragment">look at the extents of the <span class="math inline">\(y\)</span> axis</li>
+</ul>
+</div>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-6-1.png" alt="Line chart showing significant rent increases in Orange County since 2008. Y axis starts at $700, which exaggerates the size of the change" width="960" class="r-stretch"></section>
+<section id="multiple-lines" class="slide level2">
+<h2>Multiple lines</h2>
+<ul>
+<li>It’s common to have multiple lines on line charts</li>
+</ul>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-7-1.png" alt="Line chart showing significant rent increases in Orange, Durham, and Wake Counties since 2008." width="960" class="r-stretch"></section>
+<section id="multiple-y-axes" class="slide level2">
+<h2>Multiple <span class="math inline">\(y\)</span> axes</h2>
+<ul>
+<li>Occasionally, you’ll even see a graph with multiple <span class="math inline">\(y\)</span> axes</li>
+</ul>
+
+<img data-src="img/line_2y.png" alt="Line chart showing traffic flow and congestion on a California freeway, with separate axes for flow and level of congestion." class="r-stretch quarto-figure-center"><p class="caption"><span class="citation" data-cites="bhagat-conway_rush_2023">Bhagat-Conway and Zhang (<a href="#/questions" role="doc-biblioref" onclick="">2023</a>)</span></p></section>
+<section id="a-more-powerful-tool-the-r-statistical-programming-language" class="slide level2">
+<h2>A more powerful tool: the R statistical programming language</h2>
+<ul>
+<li>While Excel is a great tool, it has limitations</li>
+<li>We are going to finish out the exercises using the <a href="https://r-project.org">R statistical programming environment</a></li>
+<li>R and RStudio (frontend) are free</li>
+<li>We’re going to use a cloud version called <a href="https://posit.cloud">Posit Cloud</a>, but I would generally recommend installing R on your own computer</li>
+</ul>
+</section>
+<section id="project-setup" class="slide level2">
+<h2>Project setup</h2>
+<ul>
+<li>Log in to <a href="https://posit.cloud" class="uri">https://posit.cloud</a></li>
+<li>Select new project -&gt; new project from git repository</li>
+<li>Enter <a href="https://github.com/mattwigway/odum-data-analysis.git" class="uri">https://github.com/mattwigway/odum-data-analysis.git</a></li>
+</ul>
+</section>
+<section id="descriptive-statistics-and-histograms-in-r" class="slide level2">
+<h2>Descriptive statistics and histograms in R</h2>
+<ul>
+<li>Hands-on exercise</li>
+</ul>
+</section>
+<section id="confidence-intervals" class="slide level2">
+<h2>Confidence intervals</h2>
+<ul>
+<li>We estimated the mean commute based on our sample</li>
+<li>We want to know how much we might be off by relative the correct answer if we’d talked to everyone in the US</li>
+<li>This is often presented as a <em>confidence interval</em> or a <em>margin of error</em></li>
+</ul>
+</section>
+<section id="confidence-intervals-1" class="slide level2">
+<h2>Confidence intervals</h2>
+<div>
+<ul>
+<li class="fragment">A confidence interval is a range and a probability</li>
+<li class="fragment">For instance, a 90% confidence interval for the mean travel time to work in Chapel Hill is <a href="https://censusreporter.org/profiles/16000US3711800-chapel-hill-nc/">18.7–20.5</a></li>
+<li class="fragment">The interpretation of this is that, based on the sample size of the survey, there is a 90% probability that the actual mean commute time is in this range</li>
+</ul>
+</div>
+</section>
+<section id="margins-of-error" class="slide level2">
+<h2>Margins of error</h2>
+<ul>
+<li>In the news media, margins of error are more common than confidence intervals</li>
+<li>The mean commute time in Chapel Hill is 19.6 minutes ± 0.9 minutes, with an 90% confidence</li>
+<li>This is equivalent, although the media often leaves out the confidence level</li>
+</ul>
+</section>
+<section id="how-do-we-figure-out-how-far-off-we-are-if-we-dont-know-the-right-answer" class="slide level2">
+<h2>How do we figure out how far off we are if we don’t know the right answer?</h2>
+<ul>
+<li>Intuitively, the more people we talk to, the more accurate our estimate is likely to be</li>
+<li>This is formalized by something called the <em>Central Limit Theorem</em></li>
+<li>The Central Limit Theorem expresses the <em>sampling distribution</em> of some statistic (e.g.&nbsp;a mean) as a function of the original distribution of that value</li>
+</ul>
+</section>
+<section id="probability-distributions" class="slide level2">
+<h2>Probability distributions</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"><ul>
+<li>The x axis is whatever your variable is</li>
+<li>The y axis is the probability of observing that value*</li>
+</ul>
+</section>
+<section id="probability-distributions-1" class="slide level2">
+<h2>Probability distributions</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"><div>
+<ul>
+<li class="fragment">What is the probability that a randomly chosen American woman is 5 feet tall?
+<ul>
+<li class="fragment"><span class="fragment box-answer strike">0.06</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="probability-distributions-2" class="slide level2">
+<h2>Probability distributions</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"><ul>
+<li>Is anybody likely to be exactly 5 feet tall, not 5 feet 1/128th inch or 4 feet 127/128th inch?</li>
+</ul>
+</section>
+<section id="probability-distributions-3" class="slide level2">
+<h2>Probability distributions</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"><ul>
+<li>We can only define the probability for a range of heights, for instance 4’ 11-1/2” to 5’ 1/2”</li>
+<li>The probability of any range is the <strong>area</strong> of the probability distribution above that range
+<ul>
+<li>If you’ve taken calculus, you might call this an <em>integral</em></li>
+</ul></li>
+<li>The area under the <em>entire</em> distribution is 1 - because everyone has a height</li>
+</ul>
+</section>
+<section id="sampling-distributions" class="slide level2">
+<h2>Sampling distributions</h2>
+<div>
+<ul>
+<li class="fragment">Suppose you take a simple random sample of 100 women and find that they have a mean height of 5’ 4”</li>
+<li class="fragment">You might take another sample, and find a mean height of 5’ 3”, or 5’ 5”</li>
+<li class="fragment">The <em>sampling distribution</em> is the distribution <em>of these means</em></li>
+</ul>
+</div>
+</section>
+<section id="sampling-distributions-1" class="slide level2">
+<h2>Sampling distributions</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="the-central-limit-theorem" class="slide level2">
+<h2>The Central Limit Theorem</h2>
+<ul>
+<li>The Central Limit Theorem is basically what makes statistics work</li>
+<li>It states that as samples get larger, statistics from those samples get closer to the corresponding parameters from the population</li>
+<li>It mathematically defines how much closer</li>
+<li>This lets us quantify how likely it is that we are off by a certain amount</li>
+<li>The 95% margin of error is the amount that we are 95% certain we are not off by more than</li>
+</ul>
+</section>
+<section id="the-central-limit-theorem-in-real-life" class="slide level2">
+<h2>The Central Limit Theorem in real life</h2>
+<ul>
+<li>Airline flight overbooking</li>
+<li>Grocery store stocking</li>
+<li>Power demand</li>
+<li>Traffic</li>
+</ul>
+</section>
+<section id="the-hypothesis-test" class="slide level2">
+<h2>The hypothesis test</h2>
+<ul>
+<li>A closely related concept is the hypothesis test</li>
+<li>In hypothesis testing, we formulate two hypotheses</li>
+<li><span class="math inline">\(H_0\)</span> or the <em>null hypothesis</em>: the mean is not different</li>
+<li><span class="math inline">\(H_1\)</span> or the <em>alternative hypothesis</em>: the mean is different</li>
+</ul>
+</section>
+<section id="hypothesis-tests-and-p-values" class="slide level2">
+<h2>Hypothesis tests and <span class="math inline">\(p\)</span>-values</h2>
+<ul>
+<li>The sampling distribution allows us to calculate the probability that we would get the data we observed, if <span class="math inline">\(H_0\)</span> were true</li>
+<li>If it is sufficiently small, we <em>reject</em> the null hypothesis and <em>accept</em> the alternative hypothesis</li>
+<li>Otherwise, we <em>fail to reject</em> the null hypothesis (we cannot accept the null hypothesis)</li>
+<li>Oftentimes, the hypothesis will be that means/proportions in two groups are equal</li>
+</ul>
+</section>
+<section id="confidence-intervals-boxplots-and-hypothesis-tests-in-r" class="slide level2">
+<h2>Confidence intervals, boxplots, and hypothesis tests in R</h2>
+<ul>
+<li>Hands-on exercise</li>
+</ul>
+</section>
+<section id="grouped-data-analysis-aka-split-apply-combine" class="slide level2">
+<h2>Grouped data analysis, aka split-apply-combine</h2>
+<ul>
+<li>Often, we want to calculate statistics for particular subgroups in the data</li>
+<li>In R, <code>group_by</code> lets us split the dataset into sub-datasets based on unique values in a column</li>
+<li><code>summarize</code> lets us compute statistics on each</li>
+</ul>
+</section>
+<section id="simple-linear-regression" class="slide level2">
+<h2>Simple linear regression</h2>
+
+<img data-src="slides_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"><ul>
+<li>We want to find the line that best “fits” our data</li>
+</ul>
+</section>
+<section id="regression" class="slide level2">
+<h2>Regression</h2>
+<ul>
+<li>Mathematically, we are estimating this equation <span class="math display">\[
+y = mx + b
+\]</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+y = \alpha + \beta x
+\]</span></p>
+<ul>
+<li><span class="math inline">\(y\)</span> is also known as the <em>dependent variable</em></li>
+<li><span class="math inline">\(x\)</span> is the <em>independent variable</em></li>
+<li><span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are values or <em>coefficients</em> the regression estimates</li>
+</ul>
+</div>
+</section>
+<section id="multiple-linear-regression" class="slide level2">
+<h2>Multiple linear regression</h2>
+<ul>
+<li>Simple linear regression can only evaluate the relationship between one variable and another</li>
+<li>Multiple linear regression explains evaluates the relationship between <em>two or more</em> independent variables and one <em>dependent</em> variable</li>
+<li>The interpretation is the relationship between the dependent and independent variables, holding the other independent variables constant (e.g.&nbsp;the relationship between sex and commute time, holding education level constant)</li>
+</ul>
+</section>
+<section id="regression-in-r" class="slide level2">
+<h2>Regression in R</h2>
+<ul>
+<li>Hands-on exercise</li>
+</ul>
+</section>
+<section id="questions" class="slide level2 smaller scrollable">
+<h2>Questions?</h2>
+<div class="quarto-auto-generated-content">
+<p><img src="UNC_logo_RGB.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-anscombe_graphs_1973a" class="csl-entry" role="listitem">
+Anscombe, F. J. 1973. <span>“Graphs in <span>Statistical Analysis</span>.”</span> <em>The American Statistician</em> 27 (1): 17–21. <a href="https://doi.org/10.2307/2682899">https://doi.org/10.2307/2682899</a>.
+</div>
+<div id="ref-bhagat-conway_rush_2023" class="csl-entry" role="listitem">
+Bhagat-Conway, Matthew Wigginton, and Sam Zhang. 2023. <span>“Rush Hour-and-a-Half: Traffic Is Spreading Out Post-Lockdown.”</span> <em><span>PLoS One</span></em>.
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
